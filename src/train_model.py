@@ -67,6 +67,20 @@ TEST_SIZE = 0.20
 RANDOM_STATE = 42
 
 
+def safe_joblib_dump(obj: Any, filepath: str, retries: int = 3) -> None:
+    """Save model using joblib with retry logic for Windows file lock resilience."""
+    import time
+    for attempt in range(retries):
+        try:
+            joblib.dump(obj, filepath)
+            return
+        except OSError as e:
+            if attempt < retries - 1:
+                time.sleep(1.0)
+            else:
+                raise e
+
+
 def train_wqi_regressors() -> Tuple[Dict[str, Any], str, Any]:
     """
     Train and benchmark regression models for continuous WQI estimation.
@@ -121,7 +135,8 @@ def train_wqi_regressors() -> Tuple[Dict[str, Any], str, Any]:
         r2 = float(r2_score(y_test, y_pred))
         mape = float(np.mean(np.abs((y_test - y_pred) / np.maximum(y_test, 1e-5))) * 100.0)
 
-        cv_scores = cross_val_score(model, X, y, cv=kf, scoring="r2", n_jobs=-1)
+        # 5-fold cross-validation performed EXCLUSIVELY on training data (X_train, y_train)
+        cv_scores = cross_val_score(model, X_train, y_train, cv=kf, scoring="r2", n_jobs=-1)
         cv_mean = float(cv_scores.mean())
         cv_std = float(cv_scores.std())
 
@@ -150,7 +165,7 @@ def train_wqi_regressors() -> Tuple[Dict[str, Any], str, Any]:
             best_name = name
             best_model = model
 
-    joblib.dump(best_model, WQI_MODEL_FILE)
+    safe_joblib_dump(best_model, WQI_MODEL_FILE)
     print(f"\n[OK] Saved best regression model ({best_name}, R2={best_r2:.4f}) to {WQI_MODEL_FILE}")
 
     return results, best_name, best_model
@@ -227,7 +242,7 @@ def train_potability_classifier() -> Dict[str, Any]:
     }
 
     # Save fitted pipeline (includes trained imputer + classifier)
-    joblib.dump(pipe, POTABILITY_MODEL_FILE)
+    safe_joblib_dump(pipe, POTABILITY_MODEL_FILE)
     print(f"[OK] Saved leakage-free Potability Pipeline to {POTABILITY_MODEL_FILE}")
 
     return {

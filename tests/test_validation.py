@@ -120,8 +120,27 @@ def test_metrics_file_integrity():
     assert "best_wqi_model" in metrics, "Missing 'best_wqi_model' in metrics"
     assert "wqi_regression_models" in metrics, "Missing regression leaderboard in metrics"
     assert "potability_classification" in metrics, "Missing potability classification in metrics"
-    assert "confusion_matrix" in metrics["potability_classification"], "Missing confusion matrix in potability metrics"
-    print(f"  [PASS] Metrics file contains complete evaluation records (Best model: {metrics['best_wqi_model']})")
+
+    # Verify numeric values in regression models
+    for name, m in metrics["wqi_regression_models"].items():
+        assert isinstance(m["r2"], (int, float)), f"{name} r2 is not numeric"
+        assert isinstance(m["mae"], (int, float)), f"{name} mae is not numeric"
+        assert isinstance(m["rmse"], (int, float)), f"{name} rmse is not numeric"
+        assert isinstance(m["cv_r2_mean"], (int, float)), f"{name} cv_r2_mean is not numeric"
+        assert isinstance(m["cv_r2_std"], (int, float)), f"{name} cv_r2_std is not numeric"
+
+    # Verify numeric values in classification model
+    pot = metrics["potability_classification"]
+    for k in ["accuracy", "precision", "recall", "f1_score", "roc_auc"]:
+        assert isinstance(pot[k], (int, float)), f"Potability metric {k} is not numeric"
+
+    cm = pot.get("confusion_matrix", {})
+    assert "true_negatives" in cm and isinstance(cm["true_negatives"], int)
+    assert "true_positives" in cm and isinstance(cm["true_positives"], int)
+    assert "false_negatives" in cm and isinstance(cm["false_negatives"], int)
+    assert "false_positives" in cm and isinstance(cm["false_positives"], int)
+
+    print(f"  [PASS] Metrics file integrity verified with all numeric evaluations (Best model: {metrics['best_wqi_model']})")
 
 
 def test_diagnostics_function():

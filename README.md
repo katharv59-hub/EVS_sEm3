@@ -69,25 +69,27 @@ This platform evaluates how multi-parameter sensor inputs (pH, Turbidity, Dissol
 $$\text{WQI} = \sum_{i=1}^{n} w_i \cdot q_i$$
 
 - **Weights ($w_i$):** pH ($0.20$), DO ($0.20$), TDS ($0.20$), Turbidity ($0.15$), Conductivity ($0.15$), Temperature ($0.10$).
-- **Classification Bands:**
-  - 🟢 **90.0 – 100.0:** Excellent (Pristine freshwater)
-  - 🔵 **75.0 – 89.9:** Good (Safe with conventional filtration)
-  - 🟡 **50.0 – 74.9:** Moderate (Suitable for irrigation & aquatic life)
-  - 🟠 **25.0 – 49.9:** Poor (Degraded; requires intensive treatment)
-  - 🔴 **0.0 – 24.9:** Very Poor (Severely polluted; anoxic)
+- **Classification Bands (Project Model):**
+  - 🟢 **90.0 – 100.0:** Excellent (Very high composite water-quality score based on the project's WQI model)
+  - 🔵 **75.0 – 89.9:** Good (Generally favorable composite conditions according to the project's WQI model)
+  - 🟡 **50.0 – 74.9:** Moderate (Intermediate composite conditions according to the project's WQI model)
+  - 🟠 **25.0 – 49.9:** Poor (Significant degradation indicated by the project's WQI model)
+  - 🔴 **0.0 – 24.9:** Very Poor (Severe degradation indicated by the project's WQI model)
 
 ---
 
 ## 🏆 Model Performance Results
 
-### 1. WQI Continuous Regression Leaderboard (600 Unseen Test Samples)
+### 1. WQI Continuous Regression Leaderboard (Held-Out Test Set)
 
-| Model Algorithm | $R^2$ Score | MAE (WQI pts) | RMSE | MAPE (%) | 5-Fold CV $R^2$ |
+The dataset was divided into an 80% training set (2,400 samples) and a 20% unseen test set (600 samples). Five-fold cross-validation was performed exclusively on the training set to evaluate model stability. Final performance was then evaluated on the held-out test set.
+
+| Model Algorithm | Test $R^2$ Score | Test MAE (pts) | Test RMSE | Test MAPE (%) | 5-Fold CV $R^2$ (Train Set) |
 |---|---|---|---|---|---|
-| 🥇 **Gradient Boosting** | **0.9964** | **0.5982** | **0.8076** | **1.09%** | **0.9962 ± 0.0004** |
-| 🥈 **Random Forest** | **0.9900** | **0.9449** | **1.3481** | **1.75%** | **0.9897 ± 0.0011** |
-| 🥉 **Extra Trees** | **0.9892** | **0.9773** | **1.4061** | **1.84%** | **0.9894 ± 0.0010** |
-| 🔹 **Linear Regression (Baseline)** | **0.9542** | **2.2098** | **2.8913** | **3.88%** | **0.9540 ± 0.0028** |
+| 🥇 **Gradient Boosting** | **0.9964** | **0.5982** | **0.8076** | **1.09%** | **0.9956 ± 0.0006** |
+| 🥈 **Random Forest** | **0.9900** | **0.9449** | **1.3481** | **1.75%** | **0.9889 ± 0.0011** |
+| 🥉 **Extra Trees** | **0.9892** | **0.9773** | **1.4061** | **1.84%** | **0.9895 ± 0.0008** |
+| 🔹 **Linear Regression (Baseline)** | **0.9542** | **2.2098** | **2.8913** | **3.88%** | **0.9542 ± 0.0024** |
 
 > **Interpretation Note:** The high $R^2$ demonstrates that the regression algorithm accurately learns the non-linear relationship defined by the project's benchmark scoring formula. It should not be interpreted as proving universal predictive accuracy across uncalibrated natural lakes or rivers.
 

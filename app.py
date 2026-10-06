@@ -305,19 +305,22 @@ with tab_predict:
                 unsafe_allow_html=True,
             )
 
-            # Continuous Quality Scale Reference
-            st.markdown('<div class="section-header">📊 WQI Classification Scale (Continuous)</div>', unsafe_allow_html=True)
+            # Continuous Quality Scale Reference (Scientifically Neutral)
+            st.markdown('<div class="section-header">📊 WQI Classification Scale (Project Model)</div>', unsafe_allow_html=True)
             scale_df = pd.DataFrame([
-                {"Range": "90.0 – 100.0", "Category": "Excellent", "Description": "Pristine freshwater; requires minimal treatment."},
-                {"Range": "75.0 – 89.9", "Category": "Good", "Description": "Safe for domestic use with conventional filtration."},
-                {"Range": "50.0 – 74.9", "Category": "Moderate", "Description": "Suitable for irrigation & aquatic habitat; needs treatment."},
-                {"Range": "25.0 – 49.9", "Category": "Poor", "Description": "Substantial contamination; requires intensive purification."},
-                {"Range": "0.0 – 24.9", "Category": "Very Poor", "Description": "Severely degraded/hypoxic; unfit for direct use."},
+                {"Range": "90.0 – 100.0", "Category": "Excellent", "Description": "Very high composite water-quality score based on the project's WQI model."},
+                {"Range": "75.0 – 89.9", "Category": "Good", "Description": "Generally favorable composite conditions according to the project's WQI model."},
+                {"Range": "50.0 – 74.9", "Category": "Moderate", "Description": "Intermediate composite conditions according to the project's WQI model."},
+                {"Range": "25.0 – 49.9", "Category": "Poor", "Description": "Significant degradation indicated by the project's WQI model."},
+                {"Range": "0.0 – 24.9", "Category": "Very Poor", "Description": "Severe degradation indicated by the project's WQI model."},
             ])
             st.dataframe(scale_df, use_container_width=True, hide_index=True)
 
         with col_diag:
             st.markdown('<div class="section-header">📋 Parameter Threshold Diagnostics</div>', unsafe_allow_html=True)
+            st.caption(
+                "Note: These thresholds are used for educational screening within this project and do not constitute a complete regulatory compliance assessment."
+            )
             diagnostics = evaluate_threshold_diagnostics(pred["inputs"])
             diag_df = pd.DataFrame(diagnostics)[["parameter", "value", "threshold", "unit", "status", "standard"]]
             diag_df.columns = ["Parameter", "Input Value", "Threshold", "Unit", "Diagnostic Status", "Reference Standard"]
@@ -329,26 +332,32 @@ with tab_predict:
             else:
                 st.warning(f"⚠️ **{warnings_count} parameter warning(s) flagged above against reference standards.**")
 
-        # Clarification of 3 Concepts
-        st.markdown('<div class="section-header">💡 Important Concept Distinction</div>', unsafe_allow_html=True)
-        c1, c2, c3 = st.columns(3)
+        # Clarification of Core Concepts
+        st.markdown('<div class="section-header">💡 Distinction Between Concepts</div>', unsafe_allow_html=True)
+        c1, c2, c3, c4 = st.columns(4)
         with c1:
             st.markdown("""
-            **1. Water Quality Index (WQI)**  
-            A continuous composite indicator (0–100) reflecting general environmental condition.  
-            *A high WQI does not automatically guarantee that water is safe for unboiled human consumption.*
+            **1. WQI**  
+            *Project-defined composite environmental indicator.*  
+            Aggregates 6 sensor parameters into an overall continuous score (0–100). High WQI does not certify drinkability.
             """)
         with c2:
             st.markdown("""
-            **2. Potability Classification**  
-            A statistical classification of human drinkability based on chemical laboratory parameters.  
-            *Biological microbes, viruses, and toxic metals require independent laboratory culture tests.*
+            **2. Potability Model**  
+            *Statistical ML classification based on available laboratory parameters.*  
+            Estimates drinkability likelihood; cannot certify water safety due to unmeasured microbial factors.
             """)
         with c3:
             st.markdown("""
             **3. Threshold Diagnostics**  
-            Deterministic checks against individual parameter guidelines (e.g. BIS IS 10500 / WHO).  
-            *Identifies specific stress factors such as acidic pH or excessive turbidity independently of composite WQI.*
+            *Individual parameter screening against documented reference values.*  
+            Screens single parameters (e.g. BIS/WHO aesthetic thresholds) independently of composite WQI.
+            """)
+        with c4:
+            st.markdown("""
+            **4. Laboratory Testing**  
+            *Required for regulatory/drinking certification.*  
+            Only certified laboratory microbiology and toxicological tests can legally certify water for consumption.
             """)
 
     history = st.session_state.get("history", [])
@@ -455,13 +464,13 @@ with tab_models:
         for name, m in reg_models.items():
             leaderboard_data.append({
                 "Model Algorithm": name,
-                "R² Score": m["r2"],
-                "MAE": m["mae"],
-                "RMSE": m["rmse"],
-                "MAPE (%)": f"{m.get('mape', 'N/A')}%",
-                "5-Fold CV R²": f"{m.get('cv_r2_mean', 'N/A')} ± {m.get('cv_r2_std', 'N/A')}",
+                "Test R²": m["r2"],
+                "Test MAE (pts)": m["mae"],
+                "Test RMSE": m["rmse"],
+                "Test MAPE (%)": f"{m.get('mape', 'N/A')}%",
+                "5-Fold CV R² (Train Set)": f"{m.get('cv_r2_mean', 'N/A')} ± {m.get('cv_r2_std', 'N/A')}",
             })
-        leaderboard_df = pd.DataFrame(leaderboard_data).sort_values("R² Score", ascending=False)
+        leaderboard_df = pd.DataFrame(leaderboard_data).sort_values("Test R²", ascending=False)
 
         st.markdown("#### 1. WQI Regression Leaderboard (Continuous Estimation)")
         st.dataframe(leaderboard_df, use_container_width=True, hide_index=True)

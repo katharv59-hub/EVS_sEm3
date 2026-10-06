@@ -107,12 +107,12 @@ Where:
 * **TDS ($w = 0.20$):** $q = \text{clip}(100 \times e^{-0.002 \times \text{TDS}},\ 0,\ 100)$
 
 ### 7.2 Continuous Classification Boundaries
-To eliminate classification gaps, the scale uses gapless continuous intervals:
-- **90.0 – 100.0:** 🟢 **Excellent** (Pristine, requires minimal disinfection)
-- **75.0 – 89.9:** 🔵 **Good** (Safe for domestic consumption after standard treatment)
-- **50.0 – 74.9:** 🟡 **Moderate** (Acceptable for irrigation & aquatic fauna; requires treatment)
-- **25.0 – 49.9:** 🟠 **Poor** (Significant degradation; requires intensive treatment)
-- **0.0 – 24.9:** 🔴 **Very Poor** (Severely polluted; anoxic; unsafe for direct use)
+To eliminate classification gaps and maintain scientific neutrality, categories are defined strictly relative to the project's benchmark scoring model:
+- **90.0 – 100.0:** 🟢 **Excellent** (Very high composite water-quality score based on the project's WQI model)
+- **75.0 – 89.9:** 🔵 **Good** (Generally favorable composite conditions according to the project's WQI model)
+- **50.0 – 74.9:** 🟡 **Moderate** (Intermediate composite conditions according to the project's WQI model)
+- **25.0 – 49.9:** 🟠 **Poor** (Significant degradation indicated by the project's WQI model)
+- **0.0 – 24.9:** 🔴 **Very Poor** (Severe degradation indicated by the project's WQI model)
 
 ---
 
@@ -131,8 +131,8 @@ Because continuous field IoT probes with authenticated composite WQI labels are 
 ## 9. Machine Learning Methodology
 
 The machine learning workflow follows standard reproducible practices:
-1. **Train/Test Splitting:** 80% training split (2,400 samples) and 20% test split (600 samples) with fixed seed (`random_state=42`).
-2. **K-Fold Cross-Validation:** 5-fold cross-validation on the training set to verify generalisation stability.
+1. **Train/Test Splitting:** The dataset was divided into an 80% training set (2,400 samples) and a 20% unseen test set (600 samples) with fixed seed (`random_state=42`).
+2. **K-Fold Cross-Validation:** Five-fold cross-validation was performed exclusively on the training set to evaluate model stability. Final performance was then evaluated on the held-out test set.
 3. **Evaluation Metrics:**
    - Coefficient of Determination ($R^2$)
    - Mean Absolute Error (MAE)
@@ -143,14 +143,14 @@ The machine learning workflow follows standard reproducible practices:
 
 ## 10. Regression Model Comparison (Actual Benchmark Results)
 
-Evaluated on 600 unseen test samples:
+Evaluated on 600 unseen test samples with 5-fold cross-validation performed on the training set:
 
-| Model Algorithm | $R^2$ Score | MAE (WQI points) | RMSE | MAPE (%) | 5-Fold CV $R^2$ |
+| Model Algorithm | Test $R^2$ Score | Test MAE (WQI pts) | Test RMSE | Test MAPE (%) | 5-Fold CV $R^2$ (Train Set) |
 |---|---|---|---|---|---|
-| 🥇 **Gradient Boosting Regressor** | **0.9964** | **0.5982** | **0.8076** | **1.09%** | **0.9962 ± 0.0004** |
-| 🥈 **Random Forest Regressor** | 0.9900 | 0.9449 | 1.3481 | 1.75% | 0.9897 ± 0.0011 |
-| 🥉 **Extra Trees Regressor** | 0.9892 | 0.9773 | 1.4061 | 1.84% | 0.9894 ± 0.0010 |
-| 🔹 **Linear Regression (Baseline)** | 0.9542 | 2.2098 | 2.8913 | 3.88% | 0.9540 ± 0.0028 |
+| 🥇 **Gradient Boosting Regressor** | **0.9964** | **0.5982** | **0.8076** | **1.09%** | **0.9956 ± 0.0006** |
+| 🥈 **Random Forest Regressor** | 0.9900 | 0.9449 | 1.3481 | 1.75% | 0.9889 ± 0.0011 |
+| 🥉 **Extra Trees Regressor** | 0.9892 | 0.9773 | 1.4061 | 1.84% | 0.9895 ± 0.0008 |
+| 🔹 **Linear Regression (Baseline)** | 0.9542 | 2.2098 | 2.8913 | 3.88% | 0.9542 ± 0.0024 |
 
 ### Honest Interpretation of High $R^2$:
 The $R^2$ score of $0.9964$ achieved by Gradient Boosting reflects that the ensemble algorithm has successfully learned the non-linear transformation between the six sensor parameters and the synthetic benchmark WQI scoring formula. **This should not be interpreted as proving universal predictive accuracy across uncalibrated natural lakes or rivers.**
