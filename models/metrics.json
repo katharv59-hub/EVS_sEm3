@@ -1,15 +1,103 @@
 {
-  "MAE": 0.9449,
-  "RMSE": 1.3481,
-  "R2": 0.99,
-  "feature_importances": {
-    "pH": 0.0036841356918710854,
-    "Turbidity": 0.05002071482793633,
-    "Dissolved Oxygen": 0.09927285157792345,
-    "Temperature": 0.014077371995837204,
-    "Conductivity": 0.7910518214354137,
-    "TDS": 0.04189310447101821
+  "best_wqi_model": "GradientBoosting",
+  "wqi_regression_models": {
+    "RandomForest": {
+      "r2": 0.99,
+      "mae": 0.9449,
+      "rmse": 1.3481,
+      "mape": 1.75,
+      "cv_r2_mean": 0.9897,
+      "cv_r2_std": 0.0011,
+      "feature_importances": {
+        "pH": 0.0037,
+        "Turbidity": 0.05,
+        "Dissolved Oxygen": 0.0993,
+        "Temperature": 0.0141,
+        "Conductivity": 0.7911,
+        "TDS": 0.0419
+      }
+    },
+    "GradientBoosting": {
+      "r2": 0.9964,
+      "mae": 0.5982,
+      "rmse": 0.8076,
+      "mape": 1.09,
+      "cv_r2_mean": 0.9962,
+      "cv_r2_std": 0.0004,
+      "feature_importances": {
+        "pH": 0.0044,
+        "Turbidity": 0.0632,
+        "Dissolved Oxygen": 0.1092,
+        "Temperature": 0.0208,
+        "Conductivity": 0.6859,
+        "TDS": 0.1164
+      }
+    },
+    "ExtraTrees": {
+      "r2": 0.9892,
+      "mae": 0.9773,
+      "rmse": 1.4061,
+      "mape": 1.84,
+      "cv_r2_mean": 0.9894,
+      "cv_r2_std": 0.001,
+      "feature_importances": {
+        "pH": 0.0059,
+        "Turbidity": 0.1832,
+        "Dissolved Oxygen": 0.1801,
+        "Temperature": 0.0147,
+        "Conductivity": 0.3526,
+        "TDS": 0.2636
+      }
+    },
+    "LinearRegression": {
+      "r2": 0.9542,
+      "mae": 2.2098,
+      "rmse": 2.8913,
+      "mape": 3.88,
+      "cv_r2_mean": 0.954,
+      "cv_r2_std": 0.0028,
+      "feature_importances": {}
+    }
   },
-  "train_size": 2400,
-  "test_size": 600
+  "potability_classification": {
+    "accuracy": 0.6738,
+    "precision": 0.7386,
+    "recall": 0.2539,
+    "f1_score": 0.3779,
+    "roc_auc": 0.6638,
+    "feature_importances": {
+      "ph": 0.1468,
+      "Hardness": 0.1272,
+      "Solids": 0.1112,
+      "Chloramines": 0.1151,
+      "Sulfate": 0.1597,
+      "Conductivity": 0.0916,
+      "Organic_carbon": 0.0824,
+      "Trihalomethanes": 0.0822,
+      "Turbidity": 0.0838
+    }
+  },
+  "dataset_metadata": {
+    "wqi_dataset_rows": 3000,
+    "potability_dataset_rows": 3276,
+    "test_split_ratio": 0.2,
+    "random_state": 42
+  },
+  "mae": 0.5982,
+  "rmse": 0.8076,
+  "r2": 0.9964,
+  "feature_importances": {
+    "pH": 0.0044,
+    "Turbidity": 0.0632,
+    "Dissolved Oxygen": 0.1092,
+    "Temperature": 0.0208,
+    "Conductivity": 0.6859,
+    "TDS": 0.1164
+  },
+  "test_size": 0.2,
+  "n_train": 2400,
+  "n_test": 600,
+  "MAE": 0.5982,
+  "RMSE": 0.8076,
+  "R2": 0.9964
 }
