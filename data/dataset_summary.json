@@ -1,8 +1,248 @@
 {
   "datasets": {
+    "cpcb_india": {
+      "name": "Indian Water Quality Data (CPCB)",
+      "origin": "Central Pollution Control Board (CPCB), Ministry of Environment, Forest & Climate Change, Government of India",
+      "mirror_url": "https://raw.githubusercontent.com/aditikhatri/-Indian-water-quality-analysis-and-prediction/master/water_dataX.csv",
+      "access": "Open Government Data / Public Educational Research Mirror",
+      "rows": 1991,
+      "columns": [
+        "Station_Code",
+        "Location",
+        "State",
+        "Temperature",
+        "Dissolved_Oxygen",
+        "pH",
+        "Conductivity",
+        "BOD",
+        "Nitrate",
+        "Fecal_Coliform",
+        "Total_Coliform",
+        "Year"
+      ],
+      "cleaning_audit": {
+        "raw_rows": 1991,
+        "raw_ph_max_before_clean": 67115.0,
+        "raw_ph_mean_before_clean": 112.09067423096319,
+        "column_swapped_rows_repaired": 89,
+        "invalid_ph_count": 3,
+        "invalid_temp_count": 0,
+        "invalid_do_count": 0,
+        "invalid_conductivity_count": 0,
+        "invalid_bod_count": 0,
+        "invalid_nitrate_count": 0,
+        "clean_ph_min": 2.6,
+        "clean_ph_mean": 7.206013636363636,
+        "clean_ph_max": 9.01
+      },
+      "statistics": {
+        "Temperature": {
+          "count": 1899.0,
+          "mean": 26.21,
+          "std": 3.366,
+          "min": 10.0,
+          "25%": 24.75,
+          "50%": 27.0,
+          "75%": 28.4,
+          "max": 35.0
+        },
+        "Dissolved_Oxygen": {
+          "count": 1960.0,
+          "mean": 6.393,
+          "std": 1.333,
+          "min": 0.0,
+          "25%": 5.9,
+          "50%": 6.7,
+          "75%": 7.2,
+          "max": 11.4
+        },
+        "pH": {
+          "count": 1980.0,
+          "mean": 7.206,
+          "std": 0.644,
+          "min": 2.6,
+          "25%": 6.9,
+          "50%": 7.2,
+          "75%": 7.6,
+          "max": 9.01
+        },
+        "Conductivity": {
+          "count": 1966.0,
+          "mean": 1892.269,
+          "std": 5831.973,
+          "min": 11.0,
+          "25%": 86.25,
+          "50%": 196.0,
+          "75%": 616.5,
+          "max": 67115.0
+        },
+        "BOD": {
+          "count": 1948.0,
+          "mean": 6.94,
+          "std": 29.4,
+          "min": 0.1,
+          "25%": 1.2,
+          "50%": 1.896,
+          "75%": 3.6,
+          "max": 534.5
+        },
+        "Nitrate": {
+          "count": 1766.0,
+          "mean": 1.623,
+          "std": 4.09,
+          "min": 0.0,
+          "25%": 0.24,
+          "50%": 0.516,
+          "75%": 1.5,
+          "max": 108.7
+        }
+      }
+    },
+    "kaggle_potability": {
+      "name": "Water Potability Dataset (Kaggle)",
+      "origin": "Drinking Water Quality Studies published on Kaggle (Water Potability by Aditya Kadiwal)",
+      "mirror_url": "https://raw.githubusercontent.com/Sarthak-1408/Water-Potability/main/water_potability.csv",
+      "access": "CC0 Public Domain (Kaggle Community Dataset)",
+      "rows": 3276,
+      "columns": [
+        "ph",
+        "Hardness",
+        "Solids",
+        "Chloramines",
+        "Sulfate",
+        "Conductivity",
+        "Organic_carbon",
+        "Trihalomethanes",
+        "Turbidity",
+        "Potability"
+      ],
+      "audit": {
+        "total_rows": 3276,
+        "features_count": 9,
+        "missing_values_by_column": {
+          "ph": 491,
+          "Hardness": 0,
+          "Solids": 0,
+          "Chloramines": 0,
+          "Sulfate": 781,
+          "Conductivity": 0,
+          "Organic_carbon": 0,
+          "Trihalomethanes": 162,
+          "Turbidity": 0,
+          "Potability": 0
+        },
+        "potable_count": 1278,
+        "non_potable_count": 1998,
+        "potability_ratio": 0.3901098901098901
+      },
+      "statistics": {
+        "ph": {
+          "count": 2785.0,
+          "mean": 7.081,
+          "std": 1.594,
+          "min": 0.0,
+          "25%": 6.093,
+          "50%": 7.037,
+          "75%": 8.062,
+          "max": 14.0
+        },
+        "Hardness": {
+          "count": 3276.0,
+          "mean": 196.369,
+          "std": 32.88,
+          "min": 47.432,
+          "25%": 176.851,
+          "50%": 196.968,
+          "75%": 216.667,
+          "max": 323.124
+        },
+        "Solids": {
+          "count": 3276.0,
+          "mean": 22014.093,
+          "std": 8768.571,
+          "min": 320.943,
+          "25%": 15666.69,
+          "50%": 20927.834,
+          "75%": 27332.762,
+          "max": 61227.196
+        },
+        "Chloramines": {
+          "count": 3276.0,
+          "mean": 7.122,
+          "std": 1.583,
+          "min": 0.352,
+          "25%": 6.127,
+          "50%": 7.13,
+          "75%": 8.115,
+          "max": 13.127
+        },
+        "Sulfate": {
+          "count": 2495.0,
+          "mean": 333.776,
+          "std": 41.417,
+          "min": 129.0,
+          "25%": 307.699,
+          "50%": 333.074,
+          "75%": 359.95,
+          "max": 481.031
+        },
+        "Conductivity": {
+          "count": 3276.0,
+          "mean": 426.205,
+          "std": 80.824,
+          "min": 181.484,
+          "25%": 365.734,
+          "50%": 421.885,
+          "75%": 481.792,
+          "max": 753.343
+        },
+        "Organic_carbon": {
+          "count": 3276.0,
+          "mean": 14.285,
+          "std": 3.308,
+          "min": 2.2,
+          "25%": 12.066,
+          "50%": 14.218,
+          "75%": 16.558,
+          "max": 28.3
+        },
+        "Trihalomethanes": {
+          "count": 3114.0,
+          "mean": 66.396,
+          "std": 16.175,
+          "min": 0.738,
+          "25%": 55.845,
+          "50%": 66.622,
+          "75%": 77.337,
+          "max": 124.0
+        },
+        "Turbidity": {
+          "count": 3276.0,
+          "mean": 3.967,
+          "std": 0.78,
+          "min": 1.45,
+          "25%": 3.44,
+          "50%": 3.955,
+          "75%": 4.5,
+          "max": 6.739
+        },
+        "Potability": {
+          "count": 3276.0,
+          "mean": 0.39,
+          "std": 0.488,
+          "min": 0.0,
+          "25%": 0.0,
+          "50%": 0.0,
+          "75%": 1.0,
+          "max": 1.0
+        }
+      }
+    },
     "synthetic_benchmark": {
-      "name": "Synthetic Sensor Benchmark Dataset",
-      "source": "Physics-informed environmental simulation with latent condition modeling",
+      "name": "Physics-Calibrated Sensor Benchmark Dataset",
+      "origin": "Simulated multiparameter environmental sensor suite with latent environmental condition modeling",
+      "mirror_url": "Locally synthesized via src/generate_data.py",
+      "access": "Project-Generated MIT License",
       "rows": 3000,
       "columns": [
         "pH",
@@ -13,7 +253,7 @@
         "TDS",
         "WQI"
       ],
-      "description": "Custom calibrated sensor dataset covering pH, Turbidity, DO, Temp, Conductivity, and TDS with computed WQI.",
+      "description": "Correlated multiparameter simulation matching IoT field sensors (pH, Turbidity, DO, Temp, Conductivity, TDS).",
       "statistics": {
         "pH": {
           "count": 3000.0,
@@ -84,208 +324,6 @@
           "50%": 62.72,
           "75%": 74.002,
           "max": 95.19
-        }
-      }
-    },
-    "indian_cpcb": {
-      "name": "Indian CPCB Water Quality Dataset",
-      "source": "Central Pollution Control Board (CPCB), Ministry of Environment, Forest & Climate Change, India",
-      "rows": 1991,
-      "columns": [
-        "Station_Code",
-        "Location",
-        "State",
-        "Temperature",
-        "Dissolved_Oxygen",
-        "pH",
-        "Conductivity",
-        "BOD",
-        "Nitrate",
-        "Fecal_Coliform",
-        "Total_Coliform",
-        "Year"
-      ],
-      "description": "Historical field station monitoring across rivers and water bodies in Indian states.",
-      "statistics": {
-        "Temperature": {
-          "count": 1899.0,
-          "mean": 26.21,
-          "std": 3.366,
-          "min": 10.0,
-          "25%": 24.75,
-          "50%": 27.0,
-          "75%": 28.4,
-          "max": 35.0
-        },
-        "Dissolved_Oxygen": {
-          "count": 1960.0,
-          "mean": 6.393,
-          "std": 1.333,
-          "min": 0.0,
-          "25%": 5.9,
-          "50%": 6.7,
-          "75%": 7.2,
-          "max": 11.4
-        },
-        "pH": {
-          "count": 1983.0,
-          "mean": 112.091,
-          "std": 1878.931,
-          "min": 0.0,
-          "25%": 6.9,
-          "50%": 7.3,
-          "75%": 7.7,
-          "max": 67115.0
-        },
-        "Conductivity": {
-          "count": 1966.0,
-          "mean": 1786.466,
-          "std": 5552.276,
-          "min": 0.4,
-          "25%": 78.0,
-          "50%": 183.0,
-          "75%": 592.75,
-          "max": 65700.0
-        },
-        "BOD": {
-          "count": 1948.0,
-          "mean": 6.94,
-          "std": 29.4,
-          "min": 0.1,
-          "25%": 1.2,
-          "50%": 1.896,
-          "75%": 3.6,
-          "max": 534.5
-        },
-        "Nitrate": {
-          "count": 1766.0,
-          "mean": 1.623,
-          "std": 4.09,
-          "min": 0.0,
-          "25%": 0.24,
-          "50%": 0.516,
-          "75%": 1.5,
-          "max": 108.7
-        }
-      }
-    },
-    "kaggle_potability": {
-      "name": "Kaggle Water Potability Dataset",
-      "source": "Global water quality and potability study (mirrored on Kaggle & GitHub)",
-      "rows": 3276,
-      "columns": [
-        "ph",
-        "Hardness",
-        "Solids",
-        "Chloramines",
-        "Sulfate",
-        "Conductivity",
-        "Organic_carbon",
-        "Trihalomethanes",
-        "Turbidity",
-        "Potability"
-      ],
-      "description": "Laboratory measurements of water chemistry metrics for predicting human drinkability (Potability: 0/1).",
-      "statistics": {
-        "ph": {
-          "count": 3276.0,
-          "mean": 7.074,
-          "std": 1.47,
-          "min": 0.0,
-          "25%": 6.278,
-          "50%": 7.037,
-          "75%": 7.87,
-          "max": 14.0
-        },
-        "Hardness": {
-          "count": 3276.0,
-          "mean": 196.369,
-          "std": 32.88,
-          "min": 47.432,
-          "25%": 176.851,
-          "50%": 196.968,
-          "75%": 216.667,
-          "max": 323.124
-        },
-        "Solids": {
-          "count": 3276.0,
-          "mean": 22014.093,
-          "std": 8768.571,
-          "min": 320.943,
-          "25%": 15666.69,
-          "50%": 20927.834,
-          "75%": 27332.762,
-          "max": 61227.196
-        },
-        "Chloramines": {
-          "count": 3276.0,
-          "mean": 7.122,
-          "std": 1.583,
-          "min": 0.352,
-          "25%": 6.127,
-          "50%": 7.13,
-          "75%": 8.115,
-          "max": 13.127
-        },
-        "Sulfate": {
-          "count": 3276.0,
-          "mean": 333.608,
-          "std": 36.144,
-          "min": 129.0,
-          "25%": 317.095,
-          "50%": 333.074,
-          "75%": 350.386,
-          "max": 481.031
-        },
-        "Conductivity": {
-          "count": 3276.0,
-          "mean": 426.205,
-          "std": 80.824,
-          "min": 181.484,
-          "25%": 365.734,
-          "50%": 421.885,
-          "75%": 481.792,
-          "max": 753.343
-        },
-        "Organic_carbon": {
-          "count": 3276.0,
-          "mean": 14.285,
-          "std": 3.308,
-          "min": 2.2,
-          "25%": 12.066,
-          "50%": 14.218,
-          "75%": 16.558,
-          "max": 28.3
-        },
-        "Trihalomethanes": {
-          "count": 3276.0,
-          "mean": 66.407,
-          "std": 15.77,
-          "min": 0.738,
-          "25%": 56.648,
-          "50%": 66.622,
-          "75%": 76.667,
-          "max": 124.0
-        },
-        "Turbidity": {
-          "count": 3276.0,
-          "mean": 3.967,
-          "std": 0.78,
-          "min": 1.45,
-          "25%": 3.44,
-          "50%": 3.955,
-          "75%": 4.5,
-          "max": 6.739
-        },
-        "Potability": {
-          "count": 3276.0,
-          "mean": 0.39,
-          "std": 0.488,
-          "min": 0.0,
-          "25%": 0.0,
-          "50%": 0.0,
-          "75%": 1.0,
-          "max": 1.0
         }
       }
     }
